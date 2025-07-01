@@ -106,3 +106,125 @@ server.get("/api/frases", async (req, res) => {
     });
   }
 });
+
+// Obtener una frase específica
+server.get("/api/frases/:id", async (req, res) => {
+  if (!req.params.id || isNaN(parseInt(req.params.id))) {
+    res.status(400).json({
+      success: false,
+      error: "El id no es un número",
+    });
+    return;
+  }
+
+  try {
+    const conn = await getConnection();
+
+    const [result] = await conn.query(
+      `SELECT
+      f.texto, f.marca_tiempo, f.descripcion,
+      p.nombre AS personaje_nombre,
+      p.apellido AS personaje_apellido
+      FROM frases f
+      JOIN personajes p ON f.fk_personajes = p.id
+      WHERE f.id = ?;`,
+      [req.params.id]
+    );
+
+    await conn.end();
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: String(err),
+    });
+  }
+});
+
+// Actualizar una frase existente
+server.put("/api/frases/:id", async (req, res) => {
+  if (!req.params.id || isNaN(parseInt(req.params.id))) {
+    res.status(400).json({
+      success: false,
+      error: "El id no es un número",
+    });
+    return;
+  }
+
+  if (!req.body.texto || !req.body.descripcion || !req.body.fk_personajes) {
+    res.status(400).json({
+      success: false,
+      message: "Ha ocurrido un error",
+    });
+  }
+
+  try {
+    const conn = await getConnection();
+
+    const [result] = await conn.execute(
+      `UPDATE frases
+      SET texto = ?, marca_tiempo = ?, descripcion = ? , fk_personajes = ?
+      WHERE id = ?;`,
+      [
+        req.body.texto,
+        req.body.marca_tiempo,
+        req.body.descripcion,
+        req.body.fk_personajes,
+        req.params.id,
+      ]
+    );
+
+    await conn.end();
+
+    res.json({
+      success: true,
+      frase: {
+        id: req.params.id,
+        ...req.body,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: String(err),
+    });
+  }
+});
+
+// Eliminar una frase
+server.delete("/api/frases/:id", async (req, res) => {
+  if (!req.params.id || isNaN(parseInt(req.params.id))) {
+    res.status(400).json({
+      success: false,
+      error: "El id no es un número",
+    });
+    return;
+  }
+
+  try {
+    const conn = await getConnection();
+
+    const [result] = await conn.execute(`DELETE FROM frases WHERE id = ?`, [
+      req.params.id,
+    ]);
+
+    await conn.end();
+
+    if (result.affectedRows === 1) {
+      res.json({
+        success: true,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        error: "El id no existe",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: String(err),
+    });
+  }
+});
