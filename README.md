@@ -81,7 +81,8 @@ Devuelve una lista de frases con información del personaje y capítulo.
 
 ### 🎬 Capítulos
 
-####📃 Listar todos los capítulos
+#### 📃 Listar todos los capítulos
+
 **GET** `/api/capitulos`
 
 ## ⚠️ Errores comunes
