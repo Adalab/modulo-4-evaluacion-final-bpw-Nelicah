@@ -32,7 +32,7 @@ CREATE TABLE `capitulos` (
   `fecha_emision` date DEFAULT NULL,
   `sinopsis` mediumtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `capitulos` (
 
 LOCK TABLES `capitulos` WRITE;
 /*!40000 ALTER TABLE `capitulos` DISABLE KEYS */;
-INSERT INTO `capitulos` VALUES (1,'Bart el Genio',2,1,'1990-01-14','Bart hace trampa en una prueba y termina en una escuela para niños superdotados.'),(2,'Quién mató al Sr. Burns (Parte 1)',25,6,'1995-05-21','El Sr. Burns es herido misteriosamente, y todos son sospechosos.');
+INSERT INTO `capitulos` VALUES (1,'Bart el Genio',2,1,'1990-01-14','Bart hace trampa en una prueba y termina en una escuela para niños superdotados.'),(2,'Quién mató al Sr. Burns (Parte 1)',25,6,'1995-05-21','El Sr. Burns es herido misteriosamente, y todos son sospechosos.'),(3,'El regreso de Marge',13,4,'1993-02-11','Marge vuelve a la ciudad y lucha por defender su espacio y su familia.');
 /*!40000 ALTER TABLE `capitulos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +69,7 @@ CREATE TABLE `capitulos_has_personajes` (
 
 LOCK TABLES `capitulos_has_personajes` WRITE;
 /*!40000 ALTER TABLE `capitulos_has_personajes` DISABLE KEYS */;
-INSERT INTO `capitulos_has_personajes` VALUES (1,1),(1,2),(2,2),(2,3);
+INSERT INTO `capitulos_has_personajes` VALUES (1,1),(3,1),(1,2),(2,2),(3,2),(2,3),(3,4);
 /*!40000 ALTER TABLE `capitulos_has_personajes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +89,7 @@ CREATE TABLE `frases` (
   PRIMARY KEY (`id`),
   KEY `fk_frases_personajes_idx` (`fk_personajes`),
   CONSTRAINT `fk_frases_personajes` FOREIGN KEY (`fk_personajes`) REFERENCES `personajes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ CREATE TABLE `frases` (
 
 LOCK TABLES `frases` WRITE;
 /*!40000 ALTER TABLE `frases` DISABLE KEYS */;
-INSERT INTO `frases` VALUES (1,'¡D\'oh!','00:01:15','Frase característica de Homer al cometer errores.',1),(2,'¡Ay caramba!','00:02:30','Exclamación habitual de Bart.',2),(3,'¡Yo no fui!',NULL,'Una de las frases más repetidas por Bart cuando se mete en problemas.',2),(4,'Excelente...','00:04:42','Frase siniestra del Sr. Burns cuando algo sale según su plan.',3);
+INSERT INTO `frases` VALUES (1,'¡D\'oh!','00:01:15','Frase característica de Homer al cometer errores.',1),(2,'¡Ay caramba!',NULL,'Exclamación habitual de Bart.',2),(4,'Excelente...','00:04:42','Frase siniestra del Sr. Burns cuando algo sale según su plan.',3),(5,'¡No tengo idea de lo que estoy haciendo!','00:03:47','Homero admitiendo que está perdido en una situación.',1),(10,'A veces una mujer tiene que defenderse por sí misma','00:12:34','Frase que refleja la fuerza y determinación de Marge en una situación complicada.',4),(11,'¡Yo no fui!',NULL,'Una de las frases repetidas por Bart cuando se mete en problemas.',2);
 /*!40000 ALTER TABLE `frases` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ CREATE TABLE `personajes` (
   `ocupacion` varchar(100) NOT NULL,
   `descripcion` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,7 +125,7 @@ CREATE TABLE `personajes` (
 
 LOCK TABLES `personajes` WRITE;
 /*!40000 ALTER TABLE `personajes` DISABLE KEYS */;
-INSERT INTO `personajes` VALUES (1,'Homer','Simpson','Inspector de seguridad en la planta nuclear','Ama la cerveza, los donuts y dormir en el trabajo.'),(2,'Bart','Simpson','Estudiante','Rebelde, bromista y fan del skate.'),(3,'Sr.','Burns','Dueño de la planta nuclear','Multimillonario y malvado jefe de Homer.');
+INSERT INTO `personajes` VALUES (1,'Homer','Simpson','Inspector de seguridad en la planta nuclear','Ama la cerveza, los donuts y dormir en el trabajo.'),(2,'Bart','Simpson','Estudiante','Rebelde, bromista y fan del skate.'),(3,'Sr.','Burns','Dueño de la planta nuclear','Multimillonario y malvado jefe de Homer.'),(4,'Marge','Simpson','Ama de casa','La madre amorosa y sensata de la familia Simpson');
 /*!40000 ALTER TABLE `personajes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -138,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-01 10:33:48
+-- Dump completed on 2025-07-01 14:03:40
