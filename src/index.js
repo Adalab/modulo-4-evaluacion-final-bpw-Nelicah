@@ -228,3 +228,39 @@ server.delete("/api/frases/:id", async (req, res) => {
     });
   }
 });
+
+// Listar todos los personajes
+server.get("/api/personajes", async (req, res) => {
+  try {
+    const conn = await getConnection();
+
+    const [result] = await conn.query(`SELECT * FROM personajes;`);
+
+    await conn.end();
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: String(err),
+    });
+  }
+});
+
+// Listar todos los capitulos
+server.get("/api/capitulos", async (req, res) => {
+  try {
+    const conn = await getConnection();
+
+    const [result] = await conn.query(`SELECT * FROM capitulos;`);
+
+    await conn.end();
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: String(err),
+    });
+  }
+});
